@@ -1,0 +1,17 @@
+
+// Fonts
+@import url(https://fonts.googleapis.com/css?family=Raleway:300,400,600);
+
+// Variables
+@import "custom";
+
+// Bootstrap
+@import "~bootstrap/scss/bootstrap";
+
+//CoreUI
+@import "~@coreui/ajax/AJAX_FULL_PROJECT_GULP/src/css/style.css";
+
+//LayoutStyles
+@import "./components/layout";
+@import "./components/sidebar";
+@import "./components/bellijsten";
