@@ -13,6 +13,12 @@ class Marketinglist extends Model
 
     public function customers(){
 
-        return $this->hasMany(Customer::class)->orderBy('afspraak');
+        return $this->hasMany(Customer::class)->where('status',0)->orderBy('afspraak','DESC');
+    }
+
+
+    public function calls(){
+
+        return $this->hasMany(Customer::class)->where('status','!=',0)->orderBy('afspraak');
     }
 }

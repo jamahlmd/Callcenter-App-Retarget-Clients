@@ -12,7 +12,7 @@
 
     <div class="container">
         <div class="col-md-12">
-            <form action="{{ URL::to('import') }}" class="form-horizontal" method="post" enctype="multipart/form-data">
+            <form action="{{ URL::to('/import') }}" class="form-horizontal" method="post" enctype="multipart/form-data">
                 {{csrf_field()}}
                 <div class="form-group text-center">
                     <label for="exampleFormControlFile1">Import Excel</label>
@@ -31,5 +31,6 @@
             </form>
         </div>
     </div>
+
 
     @endsection

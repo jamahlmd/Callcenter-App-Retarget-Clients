@@ -13,7 +13,7 @@ export const fetchListsError = (error) => ({
 export const fetchLists = () => {
   return dispatch => {
       dispatch(fetchListsBegin());
-      fetch('api/lists')
+      fetch('/api/lists')
           .then(handleErrors)
           .then(response => {
               return response.json();
@@ -54,14 +54,17 @@ export const setNotBusy = (id) => ({
 
 export const startSetBusy = (id,agent) => {
     return (dispatch) => {
-        dispatch(setBusy(id,agent));
-        fetch(`api/lists/${id}`, {
+        //Hier de dispatch(setBusy(id,agent)); weggehaald
+        fetch(`/api/lists/${id}`, {
             method: 'put',
             headers: {
                 'Accept': 'application/json',
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
             },
-            body: JSON.stringify({agent})
+            body: JSON.stringify({
+                agent,
+                id
+            })
         }).then( response => {
             return response.json();
         }).then( (data)=> {
@@ -76,14 +79,17 @@ export const startSetBusy = (id,agent) => {
 
 export const startSetNotBusy = (id) => {
     return dispatch => {
-        dispatch(setNotBusy(id));
-        fetch(`api/lists/${id}`, {
+        //dispatch(setNotBusy(id));
+        fetch(`/api/lists/${id}`, {
             method: 'put',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({agent : null})
+            body: JSON.stringify({
+                agent: null,
+                id
+            })
         }).then( response => {
             return response.json();
         }).then( (data)=> {

@@ -1,12 +1,13 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {startSetBusy} from '../actions/lists';
+import {startSetBusy,startSetNotBusy} from '../actions/lists';
 
 const ListItem = (props) => (
     <div className="fade col-md-6">
         <div className="container">
             <div className="row">
                 <div className="col-md-10 offset-md-1">
+                    {/*<a onClick={ () => props.dispatch(startSetNotBusy(props.id))}>klik</a>*/}
                     <a
                         className={"bellijst-link" + (props.agent ? ' inactiveLink' : '')}
                         href={`bellen/${props.id}`}

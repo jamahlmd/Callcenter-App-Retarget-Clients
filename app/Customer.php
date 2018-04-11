@@ -16,4 +16,9 @@ class Customer extends Model
 
         return $this->belongsTo(Marketinglist::class);
     }
+
+    public function retours(){
+
+        return $this->hasMany(Retour::class);
+    }
 }

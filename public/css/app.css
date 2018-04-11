@@ -22675,8 +22675,17 @@ a {
   color: rgba(0, 0, 0, 0.9) !important;
 }
 
-.footer {
+.alert {
   position: absolute;
+  right: 11px;
+  font-size: 18px;
+  bottom: 50px;
+  padding: 1.95rem 2.25rem;
+  -webkit-transition: visibility 0s 2s, opacity 2s linear;
+  transition: visibility 0s 2s, opacity 2s linear;
+}
+
+.footer {
   bottom: 0;
   width: 100%;
   height: 60px;

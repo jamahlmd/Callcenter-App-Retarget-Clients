@@ -14,47 +14,14 @@
 
 </head>
 
-<body>
-@yield('loader')
+<body class="app header-fixed sidebar-fixed aside-menu-fixed aside-menu-hidden">
+@yield('nav')
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="{{url('home')}}"><img class="img-responsive header-logo ml-3" src="{{asset('/img/resellivit-header.png')}}"></a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
+@include('inc.nav')
 
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
+<div class="app-body">
 
-        </ul>
-        <ul class="navbar-nav">
-            @guest
-            <li class="nav-link" ><a  href="{{ route('login') }}">Login</a></li>
-            <li class="nav-link"><a  href="{{ route('register') }}">Register</a></li>
-            @else
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true">
-                        {{ Auth::user()->email }} <span class="caret"></span>
-                    </a>
-
-                    <ul class="dropdown-menu">
-                        <li>
-                            <a class="dropdown-item" href="{{ route('logout') }}"
-                               onclick="event.preventDefault();
-        document.getElementById('logout-form').submit();">
-                                Logout
-                            </a>
-
-                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                {{ csrf_field() }}
-                            </form>
-                        </li>
-                        @endguest
-                    </ul>
-        </ul>
-    </div>
-</nav>
-
+    <!-- Main content -->
         @if($flash = session('succes'))
             <div class="alert alert-success">
                 {{$flash}}
@@ -80,12 +47,10 @@
             </div>
         @endif
 
-
-<div id="root">
-    @yield('content')
+            @yield('content')
 </div>
 
-<footer class="footer">
+<footer class="footer fixed-bottom">
     <div class="container text-right">
         <span>&copy;<img class="footer-logo" src="{{asset('/img/resellivit-footer.png')}}"></span>
     </div>

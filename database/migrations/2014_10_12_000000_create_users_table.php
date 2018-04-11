@@ -29,6 +29,15 @@ class CreateUsersTable extends Migration
                 'password' => bcrypt('test123')
             )
         );
+
+        DB::table('users')->insert(
+            array(
+                'id' => 2,
+                'name' => 'tester',
+                'email' => 'test@test.nl',
+                'password' => bcrypt('test123')
+            )
+        );
     }
 
     /**

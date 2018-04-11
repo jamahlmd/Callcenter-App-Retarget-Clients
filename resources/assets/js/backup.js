@@ -18,6 +18,9 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import configureStore from './store/configureStore';
 
+
+
+
 import Header from './components/Header';
 import ListGrid from './components/ListGrid';
 import LeadsList from './components/LeadsList';
@@ -71,20 +74,7 @@ const bellen = (
     </Provider>
 );
 
-
 if (document.getElementById('bellen')) {
     ReactDOM.render(bellen, document.getElementById('bellen'));
 }
 
-
-setInterval(ajaxCall, 200000); //300000 MS == 5 minutes
-
-function ajaxCall() {
-    var xhttp;
-    xhttp = new XMLHttpRequest();
-
-    console.log('Refreshed Localhost');
-
-    xhttp.open("GET", "/refresh", true);
-    xhttp.send();
-}

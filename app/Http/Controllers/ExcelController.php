@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Retour;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use App\Customer;
@@ -23,6 +24,7 @@ class ExcelController extends Controller
 
 
     public function importIndex(){
+
 
     return view('excel/import');
 
@@ -51,8 +53,6 @@ class ExcelController extends Controller
                 'name' => $request->get('name')
             ]);
 
-            event(new NewList($marketingList));
-
 
             $data = Excel\Facades\Excel::load($path, function($reader) use ($marketingList) {
 
@@ -61,32 +61,42 @@ class ExcelController extends Controller
 
             foreach ($results as $val){
 
-                $insert[] = [
-                    'name' => $val['relatie_naam'],
-                    'e-mail' => $val['e_mail'],
-                    'marketinglist_id' => $marketingList->id,
-                    'telefoon' => $val['telefoon'],
-                    'mobiel' => $val['mobiel']
-                ];
-            }
+                //Get Retour information
+                $name = rawurlencode($val['relatie_naam']);
 
-            if(!empty($insert)){
+                $url = 'http://localhost:81/eol/api/customers/'. $name;
+                $curl = curl_init();
+                curl_setopt($curl,CURLOPT_RETURNTRANSFER,TRUE);
+                curl_setopt($curl,CURLOPT_URL,$url);
+                $result = curl_exec($curl);
+                if (!empty(curl_error($curl))) echo "CURL_ERROR: " . curl_error($curl) . "<br/>";
+                curl_close($curl);
+                $result = json_decode($result);
 
-                foreach ($insert as $item){
-
-                        Customer::create([
-                            'name' => $item['name'],
-                            'marketinglist_id' => $item['marketinglist_id'],
-                            'e-mail' => $item['e-mail'],
-                            'telefoon' => $item['telefoon'],
-                            'mobiel' => $item['mobiel'],
+                            //Customer aanmaken met list id
+                            $createCustomer = Customer::create([
+                                'name' => $val['relatie_naam'],
+                                'e-mail' => $val['e_mail'],
+                                'marketinglist_id' => $marketingList->id,
+                                'telefoon' => $val['telefoon'],
+                                'mobiel' => $val['mobiel']
                         ]);
 
-                }
+                            //Retouren erbij toevoegen many to many (indien die er zijn)
+                            if($result){
+                                foreach ($result as $res){
+                                    Retour::create([
+                                        'product_naam' => $res->invoice_name,
+                                        'reden' => $res->reason,
+                                        'datum' => $res->created_at,
+                                        'customer_id' => $createCustomer->id
+                                    ]);
+                                }
+                            }
             }
 
-
         });
+            event(new NewList($marketingList));
 
         } else {
             session()->flash('danger', 'Naam bestaat al');

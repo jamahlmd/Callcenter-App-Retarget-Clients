@@ -25,7 +25,6 @@ class HubspotController extends Controller
         redirect()->to($url)->send();
     }
 
-
     public function response(){
         if(null !== (Input::get('code'))){
             $code = Input::get('code');
@@ -65,5 +64,9 @@ class HubspotController extends Controller
             $tokens->save();
 
         }
+    }
+
+    public function import(){
+
     }
 }

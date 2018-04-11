@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
 import ListItem from './ListItem';
-import {fetchLists, addList} from '../actions/lists';
+import {fetchLists, addList, setBusy, setNotBusy} from '../actions/lists';
 
 class ListGrid extends Component {
     componentDidMount() {
@@ -10,9 +10,22 @@ class ListGrid extends Component {
             .listen('NewList', (e) => {
                 this.props.dispatch(addList(e));
             });
+
+        Echo.private(`setBusy`)
+            .listen('setBusy', (e) => {
+                this.props.dispatch(setBusy(e.id,e.agent));
+            });
+
+        Echo.private(`setNotBusy`)
+            .listen('setNotBusy', (e) => {
+                this.props.dispatch(setNotBusy(e.id));
+            });
+
     };
     render(){
         const { error, loading, marketinglists } = this.props;
+
+        console.log(marketinglists);
 
         if (error) {
             return <div>Error! {error.message}</div>;

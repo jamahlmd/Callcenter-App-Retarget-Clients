@@ -18,3 +18,12 @@ Broadcast::channel('App.User.{id}', function ($user, $id) {
 Broadcast::channel('NewList', function () {
     return true;
 });
+
+Broadcast::channel('setBusy', function () {
+    return true;
+});
+
+
+Broadcast::channel('setNotBusy', function () {
+    return true;
+});

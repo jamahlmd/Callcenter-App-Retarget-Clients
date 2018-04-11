@@ -1,13 +1,18 @@
-@extends('layouts.loggedIn')
+@extends('layouts.bellen')
 
 @include('inc.loader')
 
+@section('nav')
+    <nav class="navbar navbar-expand-lg fixed-top navbar-light bg-light">
+        <a class="btn btn-danger" href="{{ url('/bellijstkiezen/'.$id) }}">Stoppen met bellen</a>
+    @endsection
+
 @section('content')
 
-    @foreach($klanten as $klant)
 
-        {{$klant->name}}
-
-    @endforeach
+{{dd($klant)}}
 
     @endsection
+
+
+@include('inc.footer')

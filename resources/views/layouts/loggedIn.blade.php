@@ -16,56 +16,24 @@
 
 <body class="app header-fixed sidebar-fixed aside-menu-fixed aside-menu-hidden">
 @yield('loader')
-
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="#"><img class="img-responsive header-logo ml-3" src="{{asset('/img/resellivit-header.png')}}"></a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
-
-        </ul>
-        <ul class="navbar-nav">
-            @guest
-            <li class="nav-link" ><a  href="{{ route('login') }}">Login</a></li>
-            <li class="nav-link"><a  href="{{ route('register') }}">Register</a></li>
-            @else
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true">
-                        {{ Auth::user()->email }} <span class="caret"></span>
-                    </a>
-
-                    <ul class="dropdown-menu">
-                        <li>
-                            <a class="dropdown-item" href="{{ route('logout') }}"
-                               onclick="event.preventDefault();
-        document.getElementById('logout-form').submit();">
-                                Logout
-                            </a>
-
-                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                {{ csrf_field() }}
-                            </form>
-                        </li>
-                        @endguest
-                    </ul>
-        </ul>
-    </div>
-</nav>
+<nav class="navbar navbar-expand-lg fixed-top navbar-light bg-light">
+    <a class="navbar-brand" href="{{ url('/home') }}"><img class="img-responsive header-logo ml-3" src="{{asset('/img/resellivit-header.png')}}"></a>
+@include('inc.nav')
 
 <div class="app-body">
     <div class="sidebar bg-light">
         <nav class="sidebar-nav">
-            <ul class="nav pt-4">
+            <ul class="nav pt-5">
+                @teamleider
                 <li class="nav-title">
                     <i class="far fa-money-bill-alt"></i>
-                     Exact
+                    Exact / Hubspot import
                 </li>
                 <li class="nav-item">
-                    <a href="{{url('import')}}" class="nav-link"><i class="icon-drop"></i>Importeer lijsten</a>
+                    <a href="{{url('exact/login')}}" class="nav-link"><i class="icon-drop"></i>Importeer klanten</a>
                 </li>
+                @endteamleider
+
                 {{--<li class="nav-title">--}}
                     {{--<i class="far fa-money-bill-alt"></i>--}}
                     {{--Hubspot--}}
@@ -77,6 +45,11 @@
                     <i class="fas fa-phone"></i>
                     Bellen
                 </li>
+                @teamleider
+                <li class="nav-item">
+                    <a href="{{url('import')}}" class="nav-link"><i class="icon-drop"></i>Importeer lijsten</a>
+                </li>
+                @endteamleider
                 <li class="nav-item">
                     <a href="{{url('bellijstkiezen')}}" class="nav-link"><i class="icon-drop"></i>Bellijst kiezen</a>
                 </li>
@@ -110,7 +83,7 @@
     </div>
 
     <!-- Main content -->
-    <main class="main">
+    <main class="main pb-5">
         @if($flash = session('succes'))
             <div class="alert alert-success">
                 {{$flash}}
@@ -136,13 +109,13 @@
                 </div>
             @endif
 
-        <div class="pt-2">
+        <div class="mt-4 pt-5">
             @yield('content')
         </div>
     </main>
 </div>
 
-<footer class="footer">
+<footer class="footer fixed-bottom">
     <div class="container text-right">
         <span>&copy;<img class="footer-logo" src="{{asset('/img/resellivit-footer.png')}}"></span>
     </div>

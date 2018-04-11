@@ -7,7 +7,6 @@
 @section('content')
 
 
-    @teamleider
     <div class="container">
         <div class="row">
             <div class="col-md-8 offset-md-2">
@@ -21,14 +20,6 @@
             </div>
         </div>
     </div>
-    @else
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <h3 class="text-danger"> Uw account heeft geen rechten</h3>
-                </div>
-            </div>
-        </div>
-        @endteamleider
+
 
 @endsection
