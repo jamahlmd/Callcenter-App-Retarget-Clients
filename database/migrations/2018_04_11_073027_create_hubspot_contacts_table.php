@@ -20,7 +20,7 @@ class CreateHubspotContactsTable extends Migration
             $table->string('StreetAddress')->nullable();
             $table->string('country')->nullable();
             $table->string('city')->nullable();
-            $table->string('bestelGeschiedenis')->nullable();
+            $table->text('bestelGeschiedenis')->nullable();
             $table->string('Orderdatum')->nullable();
             $table->text('Totalproducts')->nullable();
         });

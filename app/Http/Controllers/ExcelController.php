@@ -61,7 +61,13 @@ class ExcelController extends Controller
 
             foreach ($results as $val){
 
-                //Get Retour information
+                $count = Customer::get()->where('marketinglist_id',$marketingList->id)->where('name',$val['relatie_naam'])->count();
+
+
+                if($count <= 0){
+
+
+                    //Get Retour information
                 $name = rawurlencode($val['relatie_naam']);
 
                 $url = 'http://localhost:81/eol/api/customers/'. $name;
@@ -73,26 +79,33 @@ class ExcelController extends Controller
                 curl_close($curl);
                 $result = json_decode($result);
 
-                            //Customer aanmaken met list id
-                            $createCustomer = Customer::create([
-                                'name' => $val['relatie_naam'],
-                                'e-mail' => $val['e_mail'],
-                                'marketinglist_id' => $marketingList->id,
-                                'telefoon' => $val['telefoon'],
-                                'mobiel' => $val['mobiel']
-                        ]);
 
-                            //Retouren erbij toevoegen many to many (indien die er zijn)
-                            if($result){
-                                foreach ($result as $res){
-                                    Retour::create([
-                                        'product_naam' => $res->invoice_name,
-                                        'reden' => $res->reason,
-                                        'datum' => $res->created_at,
-                                        'customer_id' => $createCustomer->id
-                                    ]);
-                                }
-                            }
+
+                    //Customer aanmaken met list id
+                    $createCustomer = Customer::create([
+                        'name' => $val['relatie_naam'],
+                        'e-mail' => $val['e_mail'],
+                        'marketinglist_id' => $marketingList->id,
+                        'telefoon' => $val['telefoon'],
+                        'mobiel' => $val['mobiel']
+                    ]);
+
+                    //Retouren erbij toevoegen many to many (indien die er zijn)
+                    if($result){
+                        foreach ($result as $res){
+                            Retour::create([
+                                'product_naam' => $res->invoice_name,
+                                'reden' => $res->reason,
+                                'datum' => $res->created_at,
+                                'customer_id' => $createCustomer->id
+                            ]);
+                        }
+                    }
+
+                }
+
+
+
             }
 
         });
