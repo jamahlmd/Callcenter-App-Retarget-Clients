@@ -173,7 +173,7 @@ class ExactController extends Controller
 
 
 
-                  if ($counter % 300 == 0) {
+                  if ($counter % 200 == 0) {
                     $tokens = Exacttoken::find(1);
                     }
 
