@@ -26,6 +26,14 @@
                         <input type="text" class="form-control" id="basic-url" name="name" aria-describedby="basic-addon3">
                     </div>
 
+                    <label for="basic-url">Om welk product gaat het?</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon3">Bijv: Goji Cream</span>
+                        </div>
+                        <input type="text" class="form-control" id="basic-url" name="product" aria-describedby="basic-addon3">
+                    </div>
+
                     <button class="btn btn-block btn-outline-primary">Upload</button>
                 </div>
             </form>

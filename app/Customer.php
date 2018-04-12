@@ -8,7 +8,7 @@ class Customer extends Model
 {
 
     protected $fillable = [
-        'name','e-mail', 'telefoon', 'mobiel','marketinglist_id'
+        'name','e-mail', 'telefoon', 'mobiel','marketinglist_id','opmerking'
     ];
 
 

@@ -16,6 +16,7 @@ class CreateMarketinglistsTable extends Migration
         Schema::create('marketinglists', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
+            $table->string('product');
             $table->string('agent')->nullable();
             $table->integer('sales')->default(0);
             $table->integer('rejects')->default(0);
@@ -25,7 +26,8 @@ class CreateMarketinglistsTable extends Migration
         DB::table('marketinglists')->insert(
             array(
                 'id' => 1,
-                'name' => 'TestLijst'
+                'name' => 'TestLijst',
+                'product' => 'Goji-Cream'
             )
         );
 

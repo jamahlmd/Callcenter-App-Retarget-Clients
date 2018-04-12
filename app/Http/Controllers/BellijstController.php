@@ -79,6 +79,7 @@ class BellijstController extends Controller
 
 
 
+
 //                dd($klanten);
 
 //                JavaScript::put([
@@ -92,7 +93,7 @@ class BellijstController extends Controller
 //
 //                $marketinglist->save();
 
-                return view('agent/bellen', compact(['klant','retouren','id']));
+                return view('agent/bellen', compact(['klant','retouren','id','marketinglist']));
             }
         }
 

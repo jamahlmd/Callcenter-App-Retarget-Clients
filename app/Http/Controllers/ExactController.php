@@ -6,11 +6,13 @@
 namespace App\Http\Controllers;
 
 use App\Exacttoken;
+use App\Exceptions\ApiError;
 use App\HubspotContact;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
 use Maatwebsite\Excel;
+
 
 
 
@@ -168,17 +170,17 @@ class ExactController extends Controller
                     $counter = 0;
             
                 foreach ($resultsImport as $val){
-                    
-                    
-            
+
+
+
                   if ($counter % 300 == 0) {
                     $tokens = Exacttoken::find(1);
                     }
-                    
-                    
+
+
                     $counter++;
-                    
-              
+
+
                     //Klant Relatie nummer
                     $code = substr_replace($val['code'],'',-1,0);
 
@@ -215,7 +217,7 @@ class ExactController extends Controller
 
 
                     //Alleen doorgaan als REQUEST data bevat
-                    if(isset($result->d->results[0])){
+                    if(isset($result->d->results[0])) {
 
 
                         $ID = $result->d->results[0]->ID;
@@ -247,28 +249,27 @@ class ExactController extends Controller
                         $orderDate = '';
                         $lastOrder = '';
 //                  dd($result2->d->results[0]->SalesInvoiceLines->results);
-                        if(isset($result2->d->results)){
+                        if (isset($result2->d->results)) {
 
                             $invoiceDatesplusLines = $result2->d->results;
 
-                            foreach ($invoiceDatesplusLines as $invoice){
+                            foreach ($invoiceDatesplusLines as $invoice) {
 
                                 //De datum
                                 $orderDate = $invoice->OrderDate;
 
 
-
                                 //Get last order info
                                 $lastOrder = $invoice;
 
-                                foreach ($invoice->SalesInvoiceLines->results as $line){
-                                      //Item names
+                                foreach ($invoice->SalesInvoiceLines->results as $line) {
+                                    //Item names
 //                                    dd($line->ItemDescription);
 
                                     $bestelgeschiedenis .= $line->ItemDescription . ';';
 
 
-                                    if ($line === end($invoice->SalesInvoiceLines->results)){
+                                    if ($line === end($invoice->SalesInvoiceLines->results)) {
 //                                        dd($line);
                                     }
                                 }
@@ -276,44 +277,43 @@ class ExactController extends Controller
 
                         }
 
-                    }
-                    
-                    if($orderDate){
-                        $krijg = substr_replace($orderDate, "", 0, 6);
 
-                    $epoch = substr_replace($krijg, "", -5);
+                        if ($orderDate) {
+                            $krijg = substr_replace($orderDate, "", 0, 6);
 
-                    $invoicedatum = date('Y-m-d', intval($epoch));
-                    }
-                    
+                            $epoch = substr_replace($krijg, "", -5);
 
-
-                    $totalProducts = '';
-
-                    if(isset($lastOrder->SalesInvoiceLines->results)){
-                        foreach ($lastOrder->SalesInvoiceLines->results as $lastOrderItem){
-
-                            $totalProducts .= $lastOrderItem->ItemDescription . ';';
-
+                            $invoicedatum = date('Y-m-d', intval($epoch));
                         }
+
+
+                        $totalProducts = '';
+
+                        if (isset($lastOrder->SalesInvoiceLines->results)) {
+                            foreach ($lastOrder->SalesInvoiceLines->results as $lastOrderItem) {
+
+                                $totalProducts .= $lastOrderItem->ItemDescription . ';';
+
+                            }
+                        }
+
+
+                        HubspotContact::create([
+                            'name' => $val['name'],
+                            'email' => $val['email'],
+                            'phone' => $val['phone'],
+                            'StreetAddress' => $val['addressline1'],
+                            'country' => $val['countrydescription'],
+                            'city' => $val['city'],
+                            'bestelGeschiedenis' => $bestelgeschiedenis,
+                            'Orderdatum' => $invoicedatum,
+                            'Totalproducts' => $totalProducts
+                        ]);
+
+
+                    } else {
+                        throw new ApiError('BRROKOOOOOOOOO');
                     }
-
-
-                            HubspotContact::create([
-                                'name' => $val['name'],
-                                'email' => $val['email'],
-                                'phone' => $val['phone'],
-                                'StreetAddress' => $val['addressline1'],
-                                'country' => $val['countrydescription'],
-                                'city' => $val['city'],
-                                'bestelGeschiedenis' => $bestelgeschiedenis,
-                                'Orderdatum' => $invoicedatum,
-                                'Totalproducts' => $totalProducts
-                            ]);
-
-
-
-
 
                 }
             
@@ -393,6 +393,11 @@ class ExactController extends Controller
 
 
             })->download('xls');
+
+
+
+
+
 
         return back();
 

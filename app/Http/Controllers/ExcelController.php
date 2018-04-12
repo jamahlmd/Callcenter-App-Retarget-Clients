@@ -50,7 +50,8 @@ class ExcelController extends Controller
         if($lists <= 0){
 
              $marketingList = Marketinglist::create([
-                'name' => $request->get('name')
+                'name' => $request->get('name'),
+                'product' => $request->get('product')
             ]);
 
 
@@ -68,17 +69,16 @@ class ExcelController extends Controller
 
 
                     //Get Retour information
-                $name = rawurlencode($val['relatie_naam']);
-
-                $url = 'http://localhost:81/eol/api/customers/'. $name;
-                $curl = curl_init();
-                curl_setopt($curl,CURLOPT_RETURNTRANSFER,TRUE);
-                curl_setopt($curl,CURLOPT_URL,$url);
-                $result = curl_exec($curl);
-                if (!empty(curl_error($curl))) echo "CURL_ERROR: " . curl_error($curl) . "<br/>";
-                curl_close($curl);
-                $result = json_decode($result);
-
+//                $name = rawurlencode($val['relatie_naam']);
+//
+//                $url = 'http://localhost:81/eol/api/customers/'. $name;
+//                $curl = curl_init();
+//                curl_setopt($curl,CURLOPT_RETURNTRANSFER,TRUE);
+//                curl_setopt($curl,CURLOPT_URL,$url);
+//                $result = curl_exec($curl);
+//                if (!empty(curl_error($curl))) echo "CURL_ERROR: " . curl_error($curl) . "<br/>";
+//                curl_close($curl);
+//                $result = json_decode($result);
 
 
                     //Customer aanmaken met list id
@@ -91,16 +91,16 @@ class ExcelController extends Controller
                     ]);
 
                     //Retouren erbij toevoegen many to many (indien die er zijn)
-                    if($result){
-                        foreach ($result as $res){
-                            Retour::create([
-                                'product_naam' => $res->invoice_name,
-                                'reden' => $res->reason,
-                                'datum' => $res->created_at,
-                                'customer_id' => $createCustomer->id
-                            ]);
-                        }
-                    }
+//                    if($result){
+//                        foreach ($result as $res){
+//                            Retour::create([
+//                                'product_naam' => $res->invoice_name,
+//                                'reden' => $res->reason,
+//                                'datum' => $res->created_at,
+//                                'customer_id' => $createCustomer->id
+//                            ]);
+//                        }
+//                    }
 
                 }
 

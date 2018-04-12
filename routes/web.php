@@ -12,6 +12,7 @@
 */
 use App\Events\setNotBusy;
 use App\Marketinglist;
+use App\Exceptions\ApiError;
 
 Route::get('/', function () {
     return view('welcome');
@@ -35,7 +36,12 @@ Route::get('/bellijstkiezen/{marketinglist}', 'BellijstController@setNotBusy')->
 Route::get('/bellen/{marketinglist}', 'BellijstController@bellen')->middleware('auth');
 
 //ResultsController
-Route::get('/bellen/sale/{customer}', 'ResultController@sale');
+Route::get('/results/sale/{customer}', 'ResultController@sale');
+Route::get('/results/reject/{customer}', 'ResultController@reject');
+Route::get('/results/frans/{customer}', 'ResultController@frans');
+Route::get('/results/trash/{customer}', 'ResultController@trash');
+Route::get('/results/nietopgenomen/{customer}', 'ResultController@nietopgenomen');
+Route::post('/results/afspraak/{customer}', 'ResultController@afspraak');
 
 
 
@@ -54,6 +60,13 @@ Route::get('/download', 'ExactController@download');
 Route::get('/event', function (){
 
        return view('exact/import');
+
+});
+
+
+Route::get('/error', function (){
+
+    throw new ApiError('yeah yeah');
 
 });
 

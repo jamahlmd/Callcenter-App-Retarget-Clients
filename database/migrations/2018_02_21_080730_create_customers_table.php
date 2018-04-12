@@ -21,6 +21,7 @@ class CreateCustomersTable extends Migration
             $table->string('telefoon')->nullable();
             $table->string('mobiel')->nullable();
             $table->integer('status')->default(0);
+            $table->text('opmerking')->nullable();
             // 0 Frisse Lead
             // 1 Terug bel
             // 2 Reject

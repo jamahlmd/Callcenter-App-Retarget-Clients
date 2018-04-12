@@ -40,6 +40,9 @@ const ListItem = (props) => (
                                 ) : (
                                     <button href="#" className="btn btn-lg btn-primary">Bellen!</button>
                                 )}
+                                <div className="text-right">
+                                    Product : {props.product}
+                                </div>
                             </div>
                         </div>
                     </a>

@@ -76,15 +76,15 @@ if (document.getElementById('bellen')) {
     ReactDOM.render(bellen, document.getElementById('bellen'));
 }
 
-
-setInterval(ajaxCall, 200000); //300000 MS == 5 minutes
-
-function ajaxCall() {
-    var xhttp;
-    xhttp = new XMLHttpRequest();
-
-    console.log('Refreshed Localhost');
-
-    xhttp.open("GET", "/refresh", true);
-    xhttp.send();
-}
+//
+// setInterval(ajaxCall, 200000); //300000 MS == 5 minutes
+//
+// function ajaxCall() {
+//     var xhttp;
+//     xhttp = new XMLHttpRequest();
+//
+//     console.log('Refreshed Localhost');
+//
+//     xhttp.open("GET", "/refresh", true);
+//     xhttp.send();
+// }

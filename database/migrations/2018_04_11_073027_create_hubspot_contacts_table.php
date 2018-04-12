@@ -23,6 +23,7 @@ class CreateHubspotContactsTable extends Migration
             $table->text('bestelGeschiedenis')->nullable();
             $table->string('Orderdatum')->nullable();
             $table->text('Totalproducts')->nullable();
+            $table->timestamps();
         });
     }
 
