@@ -22348,7 +22348,7 @@ if (document.getElementById('bellen')) {
     __WEBPACK_IMPORTED_MODULE_1_react_dom___default.a.render(bellen, document.getElementById('bellen'));
 }
 
-setInterval(ajaxCall, 200000); //300000 MS == 5 minutes
+setInterval(ajaxCall, 120000); //300000 MS == 5 minutes
 
 function ajaxCall() {
     var xhttp;
