@@ -77,7 +77,7 @@ if (document.getElementById('bellen')) {
 }
 
 
-setInterval(ajaxCall, 120000); //300000 MS == 5 minutes
+setInterval(ajaxCall, 120000); //120000 MS == 2 minutes
 
 function ajaxCall() {
     var xhttp;
